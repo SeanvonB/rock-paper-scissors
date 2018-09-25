@@ -14,21 +14,25 @@ class Player:
 class HumanPlayer(Player):
     pass
     
-class DumbPlayer(Player):
+class RockPlayer(Player):
+    self.name = "Dwayne Johnson"
     def __init__(self):
         super().__init__()
 
 class RandomPlayer(Player):
+    self.name = "Henry Zebrowski"
     def __init__(self):
         super().__init__()
     def move(self):
         return random.choice(moves)
 
 class ReflectPlayer(Player):
+    self.name = "John Kem Poe"
     def __init__(self):
         super().__init__()
 
 class CyclePlayer(Player):
+    self.name = "RoShamBot 3000"
     def __init__(self):
         super().__init__()
 
