@@ -21,6 +21,8 @@ class DumbPlayer(Player):
 class RandomPlayer(Player):
     def __init__(self):
         super().__init__()
+    def move(self):
+        return random.choice(moves)
 
 class ReflectPlayer(Player):
     def __init__(self):
@@ -58,5 +60,5 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(Player(), Player())
+    game = Game(RandomPlayer(), RandomPlayer())
     game.play_game()
