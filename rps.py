@@ -15,24 +15,24 @@ class HumanPlayer(Player):
     pass
     
 class RockPlayer(Player):
-    self.name = "Dwayne Johnson"
+    name = "Dwayne Johnson"
     def __init__(self):
         super().__init__()
 
 class RandomPlayer(Player):
-    self.name = "Henry Zebrowski"
+    name = "Henry Zebrowski"
     def __init__(self):
         super().__init__()
     def move(self):
         return random.choice(moves)
 
 class ReflectPlayer(Player):
-    self.name = "John Kem Poe"
+    name = "John Kem Poe"
     def __init__(self):
         super().__init__()
 
 class CyclePlayer(Player):
-    self.name = "RoShamBot 3000"
+    name = "RoShamBot 3000"
     def __init__(self):
         super().__init__()
 
@@ -52,6 +52,12 @@ class Game:
         move1 = self.p1.move()
         move2 = self.p2.move()
         print(f"Player 1: {move1}  Player 2: {move2}")
+        if beats(move1, move2):
+            print("Player 1 wins!")
+        elif beats(move2, move1):
+            print("Player 2 wins!")
+        else:
+            print("It's a draw!")
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
