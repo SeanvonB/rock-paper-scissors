@@ -1,40 +1,54 @@
 #!/usr/bin/env python3
 
+
 import random
+
 
 moves = ['rock', 'paper', 'scissors']
 
+
 class Player:
+    def __init__(self):
+        self.score = 0
+    
     def move(self):
         return 'rock'
 
     def learn(self, my_move, their_move):
         pass
 
+
 class HumanPlayer(Player):
-    pass
-    
-class RockPlayer(Player):
-    name = "Dwayne Johnson"
     def __init__(self):
         super().__init__()
+        self.name = "You"
+
+   
+class RockPlayer(Player):
+    def __init__(self):
+        super().__init__()
+        self.name = "Dwayne Johnson"
+
 
 class RandomPlayer(Player):
-    name = "Henry Zebrowski"
     def __init__(self):
         super().__init__()
+        self.name = "Henry Zebrowski"
+
     def move(self):
         return random.choice(moves)
 
+
 class ReflectPlayer(Player):
-    name = "John Kem Poe"
     def __init__(self):
         super().__init__()
+        self.name = "John Kem Poe"
+
 
 class CyclePlayer(Player):
-    name = "RoShamBot 3000"
     def __init__(self):
         super().__init__()
+        self.name = "RoShamBot 3000"
 
 
 def beats(one, two):
@@ -53,22 +67,29 @@ class Game:
         move2 = self.p2.move()
         print(f"Player 1: {move1}  Player 2: {move2}")
         if beats(move1, move2):
-            print("Player 1 wins!")
+            self.p1.score += 1
+            print(f"That's a point for {self.p1.name}!""\n")
         elif beats(move2, move1):
-            print("Player 2 wins!")
+            self.p2.score += 1
+            print(f"That's a point for {self.p2.name}!""\n")
         else:
-            print("It's a draw!")
+            print("It's a draw!""\n")
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
     def play_game(self):
+        round = 0
         print("Game start!")
-        for round in range(3):
+        while self.p1.score <= 1 and self.p2.score <= 1:
+            round += 1
             print(f"Round {round}:")
             self.play_round()
-        print("Game over!")
+        if self.p1.score == 2:
+            print(f"{self.p1.name} win! Congratulations!")
+        else:
+            print(f"{self.p2.name} wins! Better luck next time!")
 
 
 if __name__ == '__main__':
-    game = Game(RandomPlayer(), RandomPlayer())
+    game = Game(RockPlayer(), RandomPlayer())
     game.play_game()
