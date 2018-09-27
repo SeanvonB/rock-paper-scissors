@@ -74,6 +74,9 @@ class CyclePlayer(Player):
         self.name = "RoShamBot 3000"
 
 
+opponent = [RockPlayer(), RandomPlayer(), ReflectPlayer(), CyclePlayer()]
+
+
 def beats(one, two):
     return ((one == "Rock" and two == "Scissors") or
             (one == "Scissors" and two == "Paper") or
@@ -91,28 +94,30 @@ class Game:
         print(f"\nPlayer 1: {move1}  Player 2: {move2}")
         if beats(move1, move2):
             self.p1.score += 1
-            print(f"That's a point for {self.p1.name}!")
+            print(f"'That's a point for you!'")
         elif beats(move2, move1):
             self.p2.score += 1
-            print(f"That's a point for {self.p2.name}!")
+            print(f"'That's a point for {self.p2.name}!'")
         else:
-            print("It's a draw!""\n")
+            print("'It's a draw!'")
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
     def play_game(self):
         round = 0
-        print("\nGame start!")
+        print(f"\nYou're playing against {self.p2.name}. Begin!")
         while self.p1.score <= 1 and self.p2.score <= 1:
             round += 1
             print(f"\nRound {round}:")
             self.play_round()
         if self.p1.score == 2:
-            print(f"\n{self.p1.name} win! Congratulations!")
+            print(f"'\nYou win! Congratulations!'")
+            print(f"You beat {self.p2.name} with a score of {self.p1.score} to {self.p2.score}.")
         else:
-            print(f"\n{self.p2.name} wins! Better luck next time!")
+            print(f"'\n{self.p2.name} wins! Better luck next time!'")
+            print(f"{self.p2.name} beat you with a score of {self.p2.score} to {self.p1.score}.")
 
 
 if __name__ == '__main__':
-    game = Game(HumanPlayer(), RandomPlayer())
+    game = Game(HumanPlayer(), random.choice(opponent))
     game.play_game()
