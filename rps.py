@@ -10,12 +10,15 @@ moves = ["Rock", "Paper", "Scissors"]
 class Player:
     def __init__(self):
         self.score = 0
+        self.my_last = None
+        self.their_last = None
     
-    def move(self):
-        return "Rock"
-
     def learn(self, my_move, their_move):
-        pass
+        self.my_last = my_move
+        self.their_last = their_move
+
+    def move(self):
+        return random.choice(moves)
 
 
 class HumanPlayer(Player):
@@ -52,14 +55,14 @@ class RockPlayer(Player):
         super().__init__()
         self.name = "Dwayne Johnson"
 
+    def move(self):
+        return "Rock"
+
 
 class RandomPlayer(Player):
     def __init__(self):
         super().__init__()
         self.name = "Henry Zebrowski"
-
-    def move(self):
-        return random.choice(moves)
 
 
 class ReflectPlayer(Player):
@@ -67,11 +70,28 @@ class ReflectPlayer(Player):
         super().__init__()
         self.name = "John Kem Poe"
 
+    def move(self):
+        if self.their_last is None:
+            return random.choice(moves)
+        else:
+            return self.their_last
+
 
 class CyclePlayer(Player):
     def __init__(self):
         super().__init__()
         self.name = "RoShamBot 3000"
+    
+    def move(self):
+        if self.my_last is None:
+            return random.choice(moves)
+        else:
+            if self.my_last == "Rock":
+                return "Paper"
+            elif self.my_last == "Paper":
+                return "Scissors"
+            else:
+                return "Rock"
 
 
 opponent = [RockPlayer(), RandomPlayer(), ReflectPlayer(), CyclePlayer()]
@@ -111,10 +131,10 @@ class Game:
             print(f"\nRound {round}:")
             self.play_round()
         if self.p1.score == 2:
-            print(f"'\nYou win! Congratulations!'")
+            print(f"\n'You win! Congratulations!'")
             print(f"You beat {self.p2.name} with a score of {self.p1.score} to {self.p2.score}.")
         else:
-            print(f"'\n{self.p2.name} wins! Better luck next time!'")
+            print(f"\n'{self.p2.name} wins! Better luck next time!'")
             print(f"{self.p2.name} beat you with a score of {self.p2.score} to {self.p1.score}.")
 
 
