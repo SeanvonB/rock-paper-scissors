@@ -12,7 +12,7 @@ class Player:
         self.score = 0
         self.my_last = None
         self.their_last = None
-    
+
     def learn(self, my_move, their_move):
         self.my_last = my_move
         self.their_last = their_move
@@ -25,7 +25,7 @@ class HumanPlayer(Player):
     def __init__(self):
         super().__init__()
         self.name = "You"
-    
+
     def move(self):
         choice = 0
         fails = 0
@@ -81,7 +81,7 @@ class CyclePlayer(Player):
     def __init__(self):
         super().__init__()
         self.name = "RoShamBot 3000"
-    
+
     def move(self):
         if self.my_last is None:
             return random.choice(moves)
