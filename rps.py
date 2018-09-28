@@ -136,6 +136,12 @@ class Game:
         else:
             print(f"\n'{self.p2.name} wins! Better luck next time!'")
             print(f"{self.p2.name} beat you with a score of {self.p2.score} to {self.p1.score}.")
+        keep_playing = str(input("\nContinue? "))
+        if keep_playing[0].upper() == "Y":
+            game = Game(HumanPlayer(), random.choice(opponent))
+            game.play_game()
+        else:
+            print("\n'Thank you for playing!'")
 
 
 if __name__ == '__main__':
