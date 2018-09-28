@@ -114,12 +114,18 @@ class Game:
         print(f"\nPlayer 1: {move1}  Player 2: {move2}")
         if beats(move1, move2):
             self.p1.score += 1
-            print(f"'That's a point for you!'")
+            print(f"'That's a point for you! "
+            f"You have {self.p1.score}, "
+            f"and {self.p2.name} has {self.p2.score}.'")
         elif beats(move2, move1):
             self.p2.score += 1
-            print(f"'That's a point for {self.p2.name}!'")
+            print(f"'That's a point for {self.p2.name}! "
+            f"He has {self.p2.score}, "
+            f"and you have {self.p1.score}.'")
         else:
-            print("'It's a draw!'")
+            print("'It's a draw! "
+            f"{self.p2.name} still has {self.p2.score}, "
+            f"and you still have {self.p1.score}.'")
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
