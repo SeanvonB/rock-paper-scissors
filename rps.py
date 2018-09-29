@@ -4,7 +4,8 @@
 import random
 
 
-moves = ["Rock", "Paper", "Scissors"]
+moves = ["rock", "paper", "scissors"]
+
 
 valid_rock = {
         "rock": "rock",
@@ -41,6 +42,15 @@ valid_menu_endless = {
         "Endless Mode": "endless",
         "2": "single"}
 
+valid_continue = {
+        "yes": "yes",
+        "yes please": "yes",
+        "yeah": "yes",
+        "yup": "yes",
+        "y": "yes",
+        "sure": "yes",
+        "okay": "yes"}
+
 
 class Player:
     def __init__(self):
@@ -69,12 +79,12 @@ class HumanPlayer(Player):
                 move_choice = str(input("\nWhat will you throw: Rock, Paper, or Scissors? "))
             else:
                 move_choice = str(input("\nTry again: Rock, Paper, or Scissors? "))
-            if move_choice[0].upper() == "R":
-                choice = "Rock"
-            elif move_choice[0].upper() == "P":
-                choice = "Paper"
-            elif move_choice[0].upper() == "S":
-                choice = "Scissors"
+            if move_choice in valid_rock:
+                choice = "rock"
+            elif move_choice in valid_paper:
+                choice = "paper"
+            elif move_choice in valid_scissors:
+                choice = "scissors"
             else:
                 if fails <= 2:
                     fails += 1
@@ -91,7 +101,7 @@ class RockPlayer(Player):
         self.name = "Dwayne Johnson"
 
     def move(self):
-        return "Rock"
+        return "rock"
 
 
 class RandomPlayer(Player):
@@ -121,21 +131,21 @@ class CyclePlayer(Player):
         if self.my_last is None:
             return random.choice(moves)
         else:
-            if self.my_last == "Rock":
-                return "Paper"
-            elif self.my_last == "Paper":
-                return "Scissors"
+            if self.my_last == "rock":
+                return "paper"
+            elif self.my_last == "paper":
+                return "scissors"
             else:
-                return "Rock"
+                return "rock"
 
 
 opponent = [RockPlayer(), RandomPlayer(), ReflectPlayer(), CyclePlayer()]
 
 
 def beats(one, two):
-    return ((one == "Rock" and two == "Scissors") or
-            (one == "Scissors" and two == "Paper") or
-            (one == "Paper" and two == "Rock"))
+    return ((one == "rock" and two == "scissors") or
+            (one == "scissors" and two == "paper") or
+            (one == "paper" and two == "rock"))
 
 
 class Game:
@@ -146,7 +156,9 @@ class Game:
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
-        print(f"\nPlayer 1: {move1}  Player 2: {move2}")
+        print(
+            f"\nPlayer 1: {move1.capitalize()}  "
+            f"Player 2: {move2.capitalize()}")
         if beats(move1, move2):
             self.p1.score += 1
             print(
@@ -181,11 +193,11 @@ class Game:
             print(f"\n'{self.p2.name} wins! Better luck next time!'")
             print(f"{self.p2.name} beat you with a score of {self.p2.score} to {self.p1.score}.")
         keep_playing = str(input("\nContinue? "))
-        if keep_playing[0].upper() == "Y":
+        if keep_playing in valid_continue:
             game = Game(HumanPlayer(), random.choice(opponent))
             game.play_endless()
         else:
-            print("\n'Thank you for playing!'")
+            print("\n'Thanks for playing!'")
 
     def play_single(self):
         move1 = self.p1.move()
@@ -198,7 +210,7 @@ class Game:
         else:
             print("'It's a draw!")
         keep_playing = str(input("\nReturn to the Main Menu? "))
-        if keep_playing[0].upper() == "Y":
+        if keep_playing in valid_continue:
             game = Game(HumanPlayer(), random.choice(opponent))
             game.menu()
         else:
@@ -206,18 +218,26 @@ class Game:
         
 
     def menu(self):
+        selection = 0
         print("\n'Welcome to Rock-Paper-Scissors Simulator 2018!'")
-        game_type = str(input(
-            "\n[1] Play Single Round\n"
-            "[2] Play Endless Mode\n"
-            "\nPlease select a game type: "))
-        if game_type in valid_menu_single:
-            game = Game(HumanPlayer(), random.choice(opponent))
-            game.play_single()
-            print("\n'Thanks for playing!'")
-        elif game_type in valid_menu_endless:
-            game = Game(HumanPlayer(), random.choice(opponent))
-            game.play_endless()
+        while selection == 0:
+            game_type = str(input(
+                "\n[1] Play Single Round\n"
+                "[2] Play Endless Mode\n"
+                "\nPlease select a game type: "))
+            if game_type in valid_menu_single:
+                selection = 1
+                game = Game(HumanPlayer(), random.choice(opponent))
+                game.play_single()
+            elif game_type in valid_menu_endless:
+                selection = 1
+                game = Game(HumanPlayer(), random.choice(opponent))
+                game.play_endless()
+            else:
+                keep_playing = str(input("\nExit game? "))
+                if keep_playing in valid_continue:
+                    selection = 1
+                    print("\n'Thanks for playing!'")
 
 
 if __name__ == '__main__':
