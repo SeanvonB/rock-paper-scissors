@@ -40,7 +40,7 @@ valid_menu_endless = {
         "ENDLESS": "endless",
         "endless_mode": "endless",
         "Endless Mode": "endless",
-        "2": "single"}
+        "2": "endless"}
 
 valid_continue = {
         "yes": "yes",
