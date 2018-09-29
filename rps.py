@@ -6,6 +6,41 @@ import random
 
 moves = ["Rock", "Paper", "Scissors"]
 
+valid_rock = {
+        "rock": "rock",
+        "Rock": "rock",
+        "ROCK": "rock",
+        "r": "rock"}
+
+valid_paper = {
+        "paper": "paper",
+        "Paper": "paper",
+        "PAPER": "paper",
+        "p": "paper"}
+
+valid_scissors = {
+        "scissors": "scissors",
+        "Scissors": "scissors",
+        "SCISSORS": "scissors",
+        "scissor": "scissors",
+        "s": "scissors"}
+
+valid_menu_single = {
+        "single": "single",
+        "Single": "single",
+        "SINGLE": "single",
+        "single round": "single",
+        "Single Round": "single",
+        "1": "single"}
+
+valid_menu_endless = {
+        "endless": "endless",
+        "Endless": "endless",
+        "ENDLESS": "endless",
+        "endless_mode": "endless",
+        "Endless Mode": "endless",
+        "2": "single"}
+
 
 class Player:
     def __init__(self):
@@ -114,22 +149,25 @@ class Game:
         print(f"\nPlayer 1: {move1}  Player 2: {move2}")
         if beats(move1, move2):
             self.p1.score += 1
-            print(f"'That's a point for you! "
-            f"You have {self.p1.score}, "
-            f"and {self.p2.name} has {self.p2.score}.'")
+            print(
+                f"'That's a point for you! "
+                f"You have {self.p1.score}, "
+                f"and {self.p2.name} has {self.p2.score}.'")
         elif beats(move2, move1):
             self.p2.score += 1
-            print(f"'That's a point for {self.p2.name}! "
-            f"He has {self.p2.score}, "
-            f"and you have {self.p1.score}.'")
+            print(
+                f"'That's a point for {self.p2.name}! "
+                f"He has {self.p2.score}, "
+                f"and you have {self.p1.score}.'")
         else:
-            print("'It's a draw! "
-            f"{self.p2.name} still has {self.p2.score}, "
-            f"and you still have {self.p1.score}.'")
+            print(
+                "'It's a draw! "
+                f"{self.p2.name} still has {self.p2.score}, "
+                f"and you still have {self.p1.score}.'")
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
-    def play_game(self):
+    def play_endless(self):
         round = 0
         print(f"\nYou're playing against {self.p2.name}. Begin!")
         while self.p1.score <= 1 and self.p2.score <= 1:
@@ -145,11 +183,43 @@ class Game:
         keep_playing = str(input("\nContinue? "))
         if keep_playing[0].upper() == "Y":
             game = Game(HumanPlayer(), random.choice(opponent))
-            game.play_game()
+            game.play_endless()
         else:
             print("\n'Thank you for playing!'")
+
+    def play_single(self):
+        move1 = self.p1.move()
+        move2 = self.p2.move()
+        print(f"\nYou: {move1}  Opponent: {move2}")
+        if beats(move1, move2):
+            print("'You win! Congratulations!'")
+        elif beats(move2, move1):
+            print("'You lose! Better luck next time!'")
+        else:
+            print("'It's a draw!")
+        keep_playing = str(input("\nReturn to the Main Menu? "))
+        if keep_playing[0].upper() == "Y":
+            game = Game(HumanPlayer(), random.choice(opponent))
+            game.menu()
+        else:
+            print("\n'Thanks for playing!'")
+        
+
+    def menu(self):
+        print("\n'Welcome to Rock-Paper-Scissors Simulator 2018!'")
+        game_type = str(input(
+            "\n[1] Play Single Round\n"
+            "[2] Play Endless Mode\n"
+            "\nPlease select a game type: "))
+        if game_type in valid_menu_single:
+            game = Game(HumanPlayer(), random.choice(opponent))
+            game.play_single()
+            print("\n'Thanks for playing!'")
+        elif game_type in valid_menu_endless:
+            game = Game(HumanPlayer(), random.choice(opponent))
+            game.play_endless()
 
 
 if __name__ == '__main__':
     game = Game(HumanPlayer(), random.choice(opponent))
-    game.play_game()
+    game.menu()
