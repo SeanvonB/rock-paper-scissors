@@ -76,9 +76,13 @@ class HumanPlayer(Player):
         fails = 0
         while choice == 0:
             if fails == 0:
-                move_choice = str(input("\nWhat will you throw: Rock, Paper, or Scissors? "))
+                move_choice = str(input(
+                    "\nWhat will you throw: "
+                    "Rock, Paper, or Scissors? "))
             else:
-                move_choice = str(input("\nTry again: Rock, Paper, or Scissors? "))
+                move_choice = str(input(
+                    "\nTry again: "
+                    "Rock, Paper, or Scissors? "))
             if move_choice in valid_rock:
                 choice = "rock"
             elif move_choice in valid_paper:
@@ -88,10 +92,16 @@ class HumanPlayer(Player):
             else:
                 if fails <= 2:
                     fails += 1
-                    print(f"\n'Flag on the play! The referee rules that '{move_choice}' isn't a tournament-legal throw!'")
+                    print(
+                        "\n'Flag on the play!"
+                        f"The referee rules that '{move_choice}' "
+                        "isn't a tournament-legal throw!'")
                 else:
                     choice = random.choice(moves)
-                    print(f"\n'The referee rules that the garbage you're throwing most closely resembles {choice}!'")
+                    print(
+                        "\n'The referee rules that "
+                        "the garbage you're throwing "
+                        f"most closely resembles {choice}!'")
         return choice
 
 
@@ -139,7 +149,11 @@ class CyclePlayer(Player):
                 return "rock"
 
 
-opponent = [RockPlayer(), RandomPlayer(), ReflectPlayer(), CyclePlayer()]
+opponent = [
+    RockPlayer(),
+    RandomPlayer(),
+    ReflectPlayer(),
+    CyclePlayer()]
 
 
 def beats(one, two):
@@ -162,7 +176,7 @@ class Game:
         if beats(move1, move2):
             self.p1.score += 1
             print(
-                f"'That's a point for you! "
+                "'That's a point for you! "
                 f"You have {self.p1.score}, "
                 f"and {self.p2.name} has {self.p2.score}.'")
         elif beats(move2, move1):
@@ -188,10 +202,16 @@ class Game:
             self.play_round()
         if self.p1.score == 2:
             print(f"\n'You win! Congratulations!'")
-            print(f"You beat {self.p2.name} with a score of {self.p1.score} to {self.p2.score}.")
+            print(
+                f"You beat {self.p2.name} "
+                "with a score of "
+                f"{self.p1.score} to {self.p2.score}.")
         else:
             print(f"\n'{self.p2.name} wins! Better luck next time!'")
-            print(f"{self.p2.name} beat you with a score of {self.p2.score} to {self.p1.score}.")
+            print(
+                f"{self.p2.name} beat you "
+                "with a score of "
+                f"{self.p2.score} to {self.p1.score}.")
         keep_playing = str(input("\nContinue? "))
         if keep_playing in valid_continue:
             game = Game(HumanPlayer(), random.choice(opponent))
@@ -215,7 +235,6 @@ class Game:
             game.menu()
         else:
             print("\n'Thanks for playing!'")
-        
 
     def menu(self):
         selection = 0
